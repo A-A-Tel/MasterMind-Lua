@@ -1,7 +1,7 @@
-local colorCount = 6
-local codeLength = 4
-local gameLength = 10
 local randomNumber
+local colorCount = 7
+local codeLength = 6
+local gameLength = 10
 
 local name
 local playerInput
@@ -11,9 +11,8 @@ local colorCode = ""
 
 local firstAttempt = false
 local wrongInput = false
-local gameWon = false
 
-local colorList = {"R", "G", "B", "Y", "P", "C"}
+local colorList = {"R", "G", "B", "Y", "P", "C", "O"}
 
 
 local function flush()
@@ -29,12 +28,14 @@ print("Hello there! Lets start with your name...")
 name = io.read()
 
 for i=1,codeLength,1 do
+
     randomNumber = math.random(1, colorCount)
     colorCode = colorCode..colorList[randomNumber]
 end
 
 colorListString = colorListString..colorList[1]
 for i=2,colorCount,1 do
+
     colorListString = colorListString..", "..colorList[i]
 end
 colorListString = colorListString.."]"
@@ -45,6 +46,7 @@ for i=1,gameLength,1 do
     flush()
 
     if name == "Admin" then
+
         print(colorCode)
     end
 
@@ -54,6 +56,7 @@ for i=1,gameLength,1 do
     print()
 
     if firstAttempt == true then
+
         print(playerInput)
         print()
         print(codeEvaluation)
@@ -65,14 +68,16 @@ for i=1,gameLength,1 do
     end
 
     if wrongInput == true then
+
         wrongInput = false
         print("ERROR")
-        print("Your guess must be "..codeLength.."characters long!")
+        print("Your guess must be "..codeLength.." characters long!")
     end
 
     playerInput = io.read()
 
     if #playerInput ~= codeLength then
+
         wrongInput = true
         goto redo
     end
@@ -82,7 +87,8 @@ for i=1,gameLength,1 do
     codeEvaluation = ""
 
     if colorCode == playerInput then
-        gameWon = true
+
+        flush()
         print("Nice you did it!")
         return
     end
@@ -91,18 +97,17 @@ for i=1,gameLength,1 do
 
         local char1 = string.sub(playerInput,i2,i2)
         local char2 = string.sub(colorCode,i2,i2)
+
         if char1 == char2 then
+
             codeEvaluation = codeEvaluation.."B"
-
         elseif string.find(colorCode,char1) then
-            codeEvaluation = codeEvaluation.."W"
 
+            codeEvaluation = codeEvaluation.."W"
         else
+
             codeEvaluation = codeEvaluation.."-"
         end
     end
 end
-
-if gameWon == false then
-    print("Womp Womp")
-end
+print("Womp Womp")
